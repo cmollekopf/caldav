@@ -1,22 +1,15 @@
-import 'package:caldav/src/xml/webdavpropstats_parser.dart';
+import 'package:caldav/src/webdav/parser/webdavpropstats_parser.dart';
 import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/document.dart';
 import 'package:xml/src/xml/nodes/element.dart';
-import '../objects.dart';
-import './parser.dart';
+import '../element/_elements.dart';
+import '../core/webdav_parser.dart';
 
-class WebDavResponseParser extends Parser<WebDavResponse> {
-
-  @override
-  String getNodeNamespace() {
-    return 'DAV:';
-  }
-
+class WebDavResponseParser extends WebDavParser<WebDavResponse> {
   @override
   String getNodeName() {
     return 'response';
   }
-
 
   List<WebDavResponse> parse(XmlNode node) {
     this.updateNamespaces(node);

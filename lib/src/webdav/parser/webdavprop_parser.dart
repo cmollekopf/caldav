@@ -2,15 +2,10 @@ import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/element.dart';
 import 'package:xml/src/xml/nodes/text.dart';
 
-import 'parser.dart';
-import '../objects.dart';
+import '../core/webdav_parser.dart';
+import '../element/_elements.dart';
 
-class WebDavPropParser extends Parser<WebDavProp> {
-  @override
-  String getNodeNamespace() {
-    return 'DAV:';
-  }
-
+class WebDavPropParser extends WebDavParser<WebDavProp> {
   @override
   String getNodeName() {
     return 'prop';

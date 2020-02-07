@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:caldav/src/client.dart';
+import 'package:caldav/src/caldav/client.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 

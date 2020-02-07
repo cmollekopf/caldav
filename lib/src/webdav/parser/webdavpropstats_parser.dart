@@ -1,18 +1,15 @@
-import 'package:caldav/src/xml/webdavprop_parser.dart';
+import 'package:caldav/src/webdav/parser/webdavprop_parser.dart';
+import 'package:caldav/src/webdav/parser/status_parser.dart';
 import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/element.dart';
 import 'package:xml/src/xml/nodes/text.dart';
 
-import 'parser.dart';
-import '../objects.dart';
+import '../core/webdav_parser.dart';
+import '../element/_elements.dart';
 
-class WebDavPropStatsParser extends Parser<WebDavPropStat> {
+class WebDavPropStatsParser extends WebDavParser<WebDavPropStat> {
   WebDavPropParser propParser = new WebDavPropParser();
-
-  @override
-  String getNodeNamespace() {
-    return 'DAV:';
-  }
+  WebDavStatusParser statusParser = new WebDavStatusParser();
 
   @override
   String getNodeName() {
@@ -27,8 +24,7 @@ class WebDavPropStatsParser extends Parser<WebDavPropStat> {
     }
 
     // todo: think about skipping if HTTP status for propStat is not 200
-
-    WebDavPropStat propStatObj = new WebDavPropStat();
+    List<WebDavProp> props = [];
     // prop is DAV:prop
     String davNamespace = this.pathToNamespaceMap['DAV:'];
     propStat.findElements(davNamespace + ':prop').forEach((prop) {
@@ -36,10 +32,15 @@ class WebDavPropStatsParser extends Parser<WebDavPropStat> {
         if (child is XmlText) {
           return;
         }
-        propStatObj.addProp(propParser.parseSingle(child, rescanNs: true));
+        // todo: use parse() instead
+        props.add(propParser.parseSingle(child, rescanNs: true));
       });
     });
 
+    WebDavPropStat propStatObj = new WebDavPropStat(
+        props.elementAt(0),
+        statusParser.parse(node).first
+    );
     return propStatObj;
   }
 }
