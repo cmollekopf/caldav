@@ -1,8 +1,9 @@
-import 'package:caldav/src/webdav/core/response.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_auth/http_auth.dart' as http_auth;
 import 'dart:developer' as developer;
 import '../element/_elements.dart';
+import './response.dart';
+import './webdav_element.dart';
 
 class WebDavClient {
   String host;
@@ -106,9 +107,9 @@ class WebDavClient {
     return path;
   }
 
-  WebDavProp findProperty(WebDavResponse response, WebDavProp property, {bool ignoreNamespace = false}) {
+  WebDavProp findProperty(WebDavResponse response, WebDavElement property, {bool ignoreNamespace = false}) {
     for (var propStat in response.propStats) {
-      for (var prop in propStat.props) {
+      for (var prop in propStat.getValue()) {
         if ((!ignoreNamespace && prop == property) || (ignoreNamespace && prop.name == property.name)) {
           return prop;
         }

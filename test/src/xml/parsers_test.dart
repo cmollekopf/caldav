@@ -1,19 +1,21 @@
-import 'package:caldav/src/webdav/parser/webdavresponse_parser.dart';
+import 'package:caldav/src/caldav/property/calendar-home-set.dart';
+import 'package:caldav/src/webdav/parser/response.dart';
 import 'package:test/test.dart';
 import 'package:xml/xml.dart' as xml;
 
 import '../../_fixtures/caldav_data.dart' as data;
-import 'package:caldav/src/webdav/element/_elements.dart';
+import 'package:caldav/src/core/xmlelement.dart';
+import 'package:caldav/src/webdav/property/current-user-principal.dart';
 
 bool isHrefProp(o) {
-  return o == new WebDavProp('href');
+  return o == new XmlElement(name: 'href');
 }
 
 void main() {
   test('parse XML into objects', () {
     var xmlDocument = xml.parse(data.nextCloudCurrentUser);
 
-    WebDavResponseParser parser = new WebDavResponseParser();
+    ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
     expect(result.elementAt(0).href, '/remote.php/caldav/');
@@ -24,18 +26,51 @@ void main() {
 
     var propStat = result.elementAt(0).propStats.elementAt(0);
     expect(propStat.status.status, 'HTTP/1.1 200 OK');
-    var currentUserPrincipal = propStat.props.firstWhere((prop) {
-      return prop.name == 'current-user-principal' && prop.namespace == 'DAV:';
-    });
-    var href = currentUserPrincipal.value as List<WebDavProp>;
-    var hrefObj = href.firstWhere(isHrefProp);
-    expect(hrefObj.value, '/remote.php/caldav/principals/saitho/');
+
+    WebDavCurrentUserPrincipal currentUserPrincipal = null;
+    for (var prop in propStat.getValue()) {
+      currentUserPrincipal = prop.getValue().firstWhere((val) {
+        return val is WebDavCurrentUserPrincipal;
+      }, orElse: null);
+      if (currentUserPrincipal != null) {
+        break;
+      }
+    }
+    expect(currentUserPrincipal.getValue(), '/remote.php/caldav/principals/saitho/');
+  });
+
+  test('fetch calendar home', () {
+    var xmlDocument = xml.parse(data.nextCloudUserHomeCalendar);
+
+    ResponseParser parser = new ResponseParser();
+    var result = parser.parse(xmlDocument);
+    expect(result.length, 3);
+    expect(result.elementAt(0).href, '/remote.php/dav/principals/users/saitho/');
+    expect(result.elementAt(1).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
+    expect(result.elementAt(2).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
+
+    expect(result.elementAt(0).propStats.length, 1);
+
+    var propStat = result.elementAt(0).propStats.elementAt(0);
+    expect(propStat.status.status, 'HTTP/1.1 200 OK');
+
+    // cal:calendar-home-set
+    CalDavCalendarHomeSet home = null;
+    for (var prop in propStat.getValue()) {
+      home = prop.getValue().firstWhere((val) {
+        return val is CalDavCalendarHomeSet;
+      }, orElse: null);
+      if (home != null) {
+        break;
+      }
+    }
+    expect(home.getValue(), '/remote.php/dav/calendars/saitho/');
   });
 
   test('collect namespaces into a Map', () {
     var xmlDocument = xml.parse(data.nextCloudCurrentUser);
 
-    WebDavResponseParser parser = new WebDavResponseParser();
+    ResponseParser parser = new ResponseParser();
     parser.parse(xmlDocument);
 
     expect(parser.namespaceMap.length, 4);

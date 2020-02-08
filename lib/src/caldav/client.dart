@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import '../webdav/webdav.dart';
 import './calendar.dart';
+import '../webdav/core/webdav_element.dart';
 import 'dart:developer' as developer;
 
 class CalDavClient extends WebDavClient {
@@ -26,7 +27,7 @@ class CalDavClient extends WebDavClient {
 
     List<CalDavCalendar> list = [];
     responses.forEach((response) {
-      var displayName = this.findProperty(response, new WebDavProp('displayname'));
+      var displayName = this.findProperty(response, new WebDavElement('displayname'));
       list.add(new CalDavCalendar(response.href, displayName.value.toString()));
     });
 

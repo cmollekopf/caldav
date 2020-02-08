@@ -1,17 +1,23 @@
-import './status.dart';
 import './prop.dart';
+import './status.dart';
+import '../core/webdav_element.dart';
 
 /// <propstat> element described in RFC 4918
-class WebDavPropStat {
+class WebDavPropStat extends WebDavElement {
   WebDavStatus status;
-  List<WebDavProp> props = [];
+  dynamic value = [];
+
+  @override
+  List<WebDavProp> getValue() {
+    return this.value;
+  }
 
   /// The propstat XML element MUST contain one prop XML element and one status XML element.
-  WebDavPropStat(WebDavProp prop, this.status) {
+  WebDavPropStat(WebDavProp prop, this.status): super('propstat') {
     this.addProp(prop);
   }
 
   addProp(WebDavProp prop) {
-    this.props.add(prop);
+    this.value.add(prop);
   }
 }

@@ -1,7 +1,7 @@
 import '../element/response.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
-import '../parser/webdavresponse_parser.dart';
+import '../parser/response.dart';
 
 /// Internal object to serve WebDav responses. Not RFC related.
 class Response {
@@ -15,7 +15,7 @@ class Response {
   Response(this.rawResponse, this.requestPath) {
     this.rawBody = this.rawResponse.body;
     var xmlDocument = xml.parse(this.rawBody);
-    this.responses = new WebDavResponseParser().parse(xmlDocument);
+    this.responses = new ResponseParser().parse(xmlDocument);
   }
 
   WebDavResponse getByPath(String remotePath) {

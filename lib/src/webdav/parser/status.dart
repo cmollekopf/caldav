@@ -2,7 +2,7 @@ import 'package:xml/src/xml/nodes/node.dart';
 import '../element/status.dart';
 import '../core/webdav_parser.dart';
 
-class WebDavStatusParser extends WebDavParser<WebDavStatus> {
+class StatusParser extends WebDavParser<WebDavStatus> {
   @override
   String getNodeName() {
     return 'status';
