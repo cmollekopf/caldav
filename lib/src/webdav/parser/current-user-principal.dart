@@ -15,7 +15,7 @@ class CurrentUserPrincipalParser extends WebDavParser<WebDavCurrentUserPrincipal
     }
 
     var returnValue = new WebDavCurrentUserPrincipal();
-    returnValue.value = this.parseChildren(node.children);
+    returnValue.setValue(this.parseChildren(node.children));
     return returnValue;
   }
 }

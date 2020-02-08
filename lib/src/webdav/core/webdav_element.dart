@@ -2,7 +2,7 @@ import '../../core/xmlelement.dart';
 
 const webDavNamespace = 'DAV:';
 
-class WebDavElement extends XmlElement {
+class WebDavElement<T> extends XmlElement<T> {
   WebDavElement(String name) {
     this.name = name;
     this.namespace = webDavNamespace;

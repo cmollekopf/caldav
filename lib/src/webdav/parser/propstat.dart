@@ -29,7 +29,7 @@ class PropStatParser extends WebDavParser<WebDavPropStat> {
         props.elementAt(0),
         statusParser.parse(node).first
     );
-    propStatObj.value = props;
+    propStatObj.setValue(props);
 
     return propStatObj;
   }

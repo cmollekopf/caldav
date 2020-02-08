@@ -19,12 +19,12 @@ class Response {
   }
 
   WebDavResponse getByPath(String remotePath) {
-    return this.responses.firstWhere((response) => response.href == getFullPath(remotePath));
+    return this.responses.firstWhere((response) => response.getValue() == getFullPath(remotePath));
   }
 
   List<WebDavResponse> getResponsesWithoutRequestHref() {
     var responses = this.responses;
-    responses.removeWhere((response) => response.href == getFullPath(this.requestPath));
+    responses.removeWhere((response) => response.getValue() == getFullPath(this.requestPath));
     return responses;
   }
 

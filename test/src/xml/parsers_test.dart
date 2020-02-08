@@ -18,9 +18,9 @@ void main() {
     ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
-    expect(result.elementAt(0).href, '/remote.php/caldav/');
-    expect(result.elementAt(1).href, '/remote.php/caldav/principals/');
-    expect(result.elementAt(2).href, '/remote.php/caldav/calendars/');
+    expect(result.elementAt(0).getValue(), '/remote.php/caldav/');
+    expect(result.elementAt(1).getValue(), '/remote.php/caldav/principals/');
+    expect(result.elementAt(2).getValue(), '/remote.php/caldav/calendars/');
 
     expect(result.elementAt(0).propStats.length, 1);
 
@@ -45,9 +45,9 @@ void main() {
     ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
-    expect(result.elementAt(0).href, '/remote.php/dav/principals/users/saitho/');
-    expect(result.elementAt(1).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
-    expect(result.elementAt(2).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
+    expect(result.elementAt(0).getValue(), '/remote.php/dav/principals/users/saitho/');
+    expect(result.elementAt(1).getValue(), '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
+    expect(result.elementAt(2).getValue(), '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
 
     expect(result.elementAt(0).propStats.length, 1);
 

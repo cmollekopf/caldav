@@ -1,7 +1,7 @@
 import '../core/webdav_element.dart';
 
 /// <status> element described in RFC 4918
-class WebDavStatus extends WebDavElement {
+class WebDavStatus extends WebDavElement<String> {
   String status;
 
   /// Holds a single HTTP status-line.
