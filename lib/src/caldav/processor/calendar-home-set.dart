@@ -16,7 +16,7 @@ class CalendarHomeSetProcessor extends CalDavParser<CalDavCalendarHomeSet> {
     }
 
     var returnValue = new CalDavCalendarHomeSet();
-    returnValue.setValue(this.parseChildren(node.children));
+    returnValue.url = this.parseChildren(node.children);
     return returnValue;
   }
 }

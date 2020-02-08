@@ -18,25 +18,25 @@ void main() {
     ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
-    expect(result.elementAt(0).getValue(), '/remote.php/caldav/');
-    expect(result.elementAt(1).getValue(), '/remote.php/caldav/principals/');
-    expect(result.elementAt(2).getValue(), '/remote.php/caldav/calendars/');
+    expect(result.elementAt(0).getHref(), '/remote.php/caldav/');
+    expect(result.elementAt(1).getHref(), '/remote.php/caldav/principals/');
+    expect(result.elementAt(2).getHref(), '/remote.php/caldav/calendars/');
 
     expect(result.elementAt(0).propStats.length, 1);
 
     var propStat = result.elementAt(0).propStats.elementAt(0);
-    expect(propStat.status.status, 'HTTP/1.1 200 OK');
+    expect(propStat.status.getStatus(), 'HTTP/1.1 200 OK');
 
     WebDavCurrentUserPrincipal currentUserPrincipal = null;
-    for (var prop in propStat.getValue()) {
-      currentUserPrincipal = prop.getValue().firstWhere((val) {
+    for (var prop in propStat.props) {
+      currentUserPrincipal = prop.content.firstWhere((val) {
         return val is WebDavCurrentUserPrincipal;
       }, orElse: null);
       if (currentUserPrincipal != null) {
         break;
       }
     }
-    expect(currentUserPrincipal.getValue(), '/remote.php/caldav/principals/saitho/');
+    expect(currentUserPrincipal.url, '/remote.php/caldav/principals/saitho/');
   });
 
   test('fetch calendar home', () {
@@ -45,26 +45,26 @@ void main() {
     ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
-    expect(result.elementAt(0).getValue(), '/remote.php/dav/principals/users/saitho/');
-    expect(result.elementAt(1).getValue(), '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
-    expect(result.elementAt(2).getValue(), '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
+    expect(result.elementAt(0).href, '/remote.php/dav/principals/users/saitho/');
+    expect(result.elementAt(1).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
+    expect(result.elementAt(2).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
 
     expect(result.elementAt(0).propStats.length, 1);
 
     var propStat = result.elementAt(0).propStats.elementAt(0);
-    expect(propStat.status.status, 'HTTP/1.1 200 OK');
+    expect(propStat.status.getStatus(), 'HTTP/1.1 200 OK');
 
     // cal:calendar-home-set
     CalDavCalendarHomeSet home = null;
-    for (var prop in propStat.getValue()) {
-      home = prop.getValue().firstWhere((val) {
+    for (var prop in propStat.props) {
+      home = prop.content.firstWhere((val) {
         return val is CalDavCalendarHomeSet;
       }, orElse: null);
       if (home != null) {
         break;
       }
     }
-    expect(home.getValue(), '/remote.php/dav/calendars/saitho/');
+    expect(home.url, '/remote.php/dav/calendars/saitho/');
   });
 
   test('collect namespaces into a Map', () {

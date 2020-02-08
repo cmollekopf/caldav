@@ -1,4 +1,5 @@
 import 'package:caldav/src/core/parser.dart';
+import 'package:caldav/src/webdav/parser/displayname.dart';
 import 'package:caldav/src/webdav/parser/status.dart';
 import 'package:caldav/src/webdav/parser/prop.dart';
 import 'package:caldav/src/webdav/parser/propstat.dart';
@@ -22,6 +23,7 @@ class ParserFactory {
       new ResponseParser(),
       new StatusParser(),
       new CurrentUserPrincipalParser(),
+      new DisplayNameParser(),
 
       // CalDav
       new CalendarHomeSetProcessor(),

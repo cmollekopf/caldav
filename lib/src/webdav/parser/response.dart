@@ -34,7 +34,7 @@ class ResponseParser extends WebDavParser<WebDavResponse> {
     XmlElement response = node as XmlElement;
     WebDavResponse responseObj = new WebDavResponse();
 
-    responseObj.setValue(ParserFactory().getParser('href', webDavNamespace).parse(response).first);
+    responseObj.href = ParserFactory().getParser('href', webDavNamespace).parse(response).first;
     responseObj.propStats = new PropStatParser().parse(response);
     return responseObj;
   }

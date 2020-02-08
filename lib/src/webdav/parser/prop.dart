@@ -18,7 +18,7 @@ class PropParser extends WebDavParser<WebDavProp> {
 
     XmlElement element = node as XmlElement;
     WebDavProp propObj = new WebDavProp();
-    propObj.setValue(this.parseChildren(element.children));
+    propObj.content = this.parseChildren(element.children);
     return propObj;
   }
 }

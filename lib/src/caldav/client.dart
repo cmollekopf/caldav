@@ -28,7 +28,7 @@ class CalDavClient extends WebDavClient {
     List<CalDavCalendar> list = [];
     responses.forEach((response) {
       var displayName = this.findProperty(response, new WebDavElement('displayname'));
-      list.add(new CalDavCalendar(response.getValue(), displayName.getValue().toString()));
+      list.add(new CalDavCalendar(response.getHref(), displayName.toString()));
     });
 
     return list;

@@ -1,3 +1,4 @@
+import 'package:caldav/src/core/xmlelement.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_auth/http_auth.dart' as http_auth;
 import 'dart:developer' as developer;
@@ -22,7 +23,7 @@ class WebDavClient {
       String password,
       String path,
       {String protocol = 'http', int port, http.BaseClient httpClient}
-      ) {
+  ) {
     this.baseUrl = "$protocol://$host";
     if (port != null) {
       this.baseUrl = "$protocol://$host:$port";
@@ -107,11 +108,13 @@ class WebDavClient {
     return path;
   }
 
-  WebDavProp findProperty(WebDavResponse response, WebDavElement property, {bool ignoreNamespace = false}) {
+  XmlElement findProperty(WebDavResponse response, XmlElement property, {bool ignoreNamespace = false}) {
     for (var propStat in response.propStats) {
-      for (var prop in propStat.getValue()) {
-        if ((!ignoreNamespace && prop == property) || (ignoreNamespace && prop.name == property.name)) {
-          return prop;
+      for (var prop in propStat.props) {
+        for (var content in prop.content) {
+          if ((!ignoreNamespace && content == property) || (ignoreNamespace && content.name == property.name)) {
+            return prop;
+          }
         }
       }
     }
