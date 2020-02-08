@@ -1,4 +1,4 @@
-import '../properties/resourcetype.dart';
+import '../property/resourcetype.dart';
 
 /// <prop> element described in RFC 4918
 class WebDavProp {

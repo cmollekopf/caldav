@@ -1,4 +1,4 @@
-import '../properties/resourcetype.dart';
+import '../property/resourcetype.dart';
 
 class DavResource {
   WebDavResourceType resourceType;

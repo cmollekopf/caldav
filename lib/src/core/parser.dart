@@ -22,6 +22,7 @@ abstract class Parser<T> {
 
   updateNamespaces(XmlNode node) {
     List<XmlAttribute> xmlAttributes = collectParentAttributes(node);
+    // todo: consider global xmlns as well
     RegExp re = new RegExp(r'xmlns:(\w+)="([\w\W]+)"');
     xmlAttributes.removeWhere((attribute) => !re.hasMatch(attribute.toString()));
 
