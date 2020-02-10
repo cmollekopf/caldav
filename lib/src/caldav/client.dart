@@ -16,13 +16,13 @@ class CalDavClient extends WebDavClient {
       ): super(host, username, password, path, protocol: protocol, port: port, httpClient: httpClient);
 
   /// Returns URL of user's principal
-  Future<String> getCurrentUserPrincipal(CalDavClient client) async {
+  Future<String> getCurrentUserPrincipal() async {
     var requestResponse = await this.propfind(
         '',
         body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x0:current-user-principal/></x0:prop></x0:propfind>'
     );
 
-    var prop = client.findProperty(
+    var prop = this.findProperty<WebDavCurrentUserPrincipal>(
         requestResponse.getByRequestPath(),
         new WebDavCurrentUserPrincipal()
     );
@@ -30,13 +30,13 @@ class CalDavClient extends WebDavClient {
   }
 
   /// Returns path to user's home calendar
-  Future<String> getUserHomeCalendar(CalDavClient client) async {
-    String userPrincipal = await getCurrentUserPrincipal(client);
+  Future<String> getUserHomeCalendar() async {
+    String userPrincipal = await getCurrentUserPrincipal();
     var requestResponse = await this.propfind(
         userPrincipal,
         body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x1:calendar-home-set xmlns:x1="urn:ietf:params:xml:ns:caldav"/></x0:prop></x0:propfind>'
     );
-    var prop = client.findProperty(
+    var prop = this.findProperty<CalDavCalendarHomeSet>(
         requestResponse.getByRequestPath(),
         new CalDavCalendarHomeSet()
     );
