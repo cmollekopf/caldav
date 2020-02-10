@@ -45,9 +45,9 @@ void main() {
     ResponseParser parser = new ResponseParser();
     var result = parser.parse(xmlDocument);
     expect(result.length, 3);
-    expect(result.elementAt(0).href, '/remote.php/dav/principals/users/saitho/');
-    expect(result.elementAt(1).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-read/');
-    expect(result.elementAt(2).href, '/remote.php/dav/principals/users/saitho/calendar-proxy-write/');
+    expect(result.elementAt(0).href, '/remote.php/caldav/principals/users/saitho/');
+    expect(result.elementAt(1).href, '/remote.php/caldav/principals/users/saitho/calendar-proxy-read/');
+    expect(result.elementAt(2).href, '/remote.php/caldav/principals/users/saitho/calendar-proxy-write/');
 
     expect(result.elementAt(0).propStats.length, 1);
 
@@ -64,7 +64,7 @@ void main() {
         break;
       }
     }
-    expect(home.url, '/remote.php/dav/calendars/saitho/');
+    expect(home.url, '/remote.php/caldav/calendars/saitho/');
   });
 
   test('collect namespaces into a Map', () {
