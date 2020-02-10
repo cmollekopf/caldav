@@ -1,3 +1,4 @@
+import 'package:caldav/src/core/utility/string.dart';
 import 'package:caldav/src/core/xmlelement.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_auth/http_auth.dart' as http_auth;
@@ -56,19 +57,19 @@ class WebDavClient {
   }
 
   Future<Response> put(String remotePath, {String body, Map<String, String> headers}) async {
-    remotePath = sanitizePath(remotePath);
+    remotePath = StringUtility.sanitizePath(remotePath, baseUrl: this.path);
     http.Response response = await this
         ._send('PUT', remotePath, headers: headers, body: body);
-    return new Response(response, remotePath);
+    return new Response(response, remotePath, this.path);
   }
 
   Future<Response> propfind(String remotePath, {String body}) async {
-    remotePath = sanitizePath(remotePath);
+    remotePath = StringUtility.sanitizePath(remotePath, baseUrl: this.path);
     Map<String, String> userHeader = {'Depth': '1'};
     http.Response response = await this
         ._send('PROPFIND', remotePath, headers: userHeader, body: body);
 
-    return new Response(response, remotePath);
+    return new Response(response, remotePath, this.path);
   }
 
   /// send the actual HTTP request with given [method] and [path]
@@ -90,32 +91,16 @@ class WebDavClient {
     return response;
   }
 
-  /// Removes API base path and leading and trailing slash of path string
-  String sanitizePath(String path) {
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    if (path.startsWith(this.path)) {
-      path = path.substring(this.path.length);
-    }
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    if (path.endsWith('/')) {
-      path = path.substring(0, path.length-1);
-    }
-    return path;
-  }
-
   T findProperty<T extends XmlElement>(WebDavResponse response, T property, {bool ignoreNamespace = false}) {
     for (var propStat in response.propStats) {
       for (var prop in propStat.props) {
         for (var content in prop.content) {
           if ((!ignoreNamespace && content == property) || (ignoreNamespace && content.name == property.name)) {
-            return prop as T;
+            return content as T;
           }
         }
       }
     }
+    return null;
   }
 }

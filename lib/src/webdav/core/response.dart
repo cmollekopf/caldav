@@ -1,3 +1,5 @@
+import 'package:caldav/src/core/utility/string.dart';
+
 import '../element/response.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
@@ -5,21 +7,22 @@ import '../parser/response.dart';
 
 /// Internal object to serve WebDav responses. Not RFC related.
 class Response {
-  String requestPath;
+  String requestPath; // Request path in http://[baseurl]/[apiPath]/[requestpath], e.g. "calendar" in http://baseurl.com/api/calendar
+  String requestApiPath; // apiPath in http://[baseurl]/[apiPath]/[requestPath], e.g. "api" in http://baseurl.com/api/calendar
 
   http.Response rawResponse;
 
   String rawBody;
   List<WebDavResponse> responses;
 
-  Response(this.rawResponse, this.requestPath) {
+  Response(this.rawResponse, this.requestPath, this.requestApiPath) {
     this.rawBody = this.rawResponse.body;
     var xmlDocument = xml.parse(this.rawBody);
     this.responses = new ResponseParser().parse(xmlDocument);
   }
 
   WebDavResponse getByPath(String remotePath) {
-    return this.responses.firstWhere((response) => response.getHref() == getFullPath(remotePath));
+    return this.responses.firstWhere((response) => response.getHref() == StringUtility.getFullPath(this.requestApiPath, remotePath));
   }
 
   WebDavResponse getByRequestPath() {
@@ -28,29 +31,7 @@ class Response {
 
   List<WebDavResponse> getResponsesWithoutRequestHref() {
     var responses = this.responses;
-    responses.removeWhere((response) => response.getHref() == getFullPath(this.requestPath));
+    responses.removeWhere((response) => response.getHref() == StringUtility.getFullPath(this.requestApiPath, this.requestPath));
     return responses;
-  }
-
-  /// Removes API base path and leading and trailing slash of path string
-  String sanitizePath(String path) {
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    if (path.startsWith(this.requestPath)) {
-      path = path.substring(this.requestPath.length);
-    }
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    if (path.endsWith('/')) {
-      path = path.substring(0, path.length-1);
-    }
-    return path;
-  }
-
-  String getFullPath(String remotePath) {
-    remotePath = sanitizePath(remotePath);
-    return '/' + this.requestPath + (remotePath.isNotEmpty ? '/' + remotePath : '') + '/';
   }
 }
