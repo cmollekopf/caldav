@@ -1,7 +1,9 @@
+import 'package:caldav/src/caldav/property/calendar-home-set.dart';
+import 'package:caldav/src/webdav/property/current-user-principal.dart';
+import 'package:caldav/src/webdav/property/displayname.dart';
 import 'package:http/http.dart' as http;
 import '../webdav/webdav.dart';
 import './calendar.dart';
-import '../webdav/core/webdav_element.dart';
 import 'dart:developer' as developer;
 
 class CalDavClient extends WebDavClient {
@@ -13,6 +15,33 @@ class CalDavClient extends WebDavClient {
       {String protocol = 'http', int port, http.BaseClient httpClient}
       ): super(host, username, password, path, protocol: protocol, port: port, httpClient: httpClient);
 
+  /// Returns URL of user's principal
+  Future<String> getCurrentUserPrincipal(CalDavClient client) async {
+    var requestResponse = await this.propfind(
+        '',
+        body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x0:current-user-principal/></x0:prop></x0:propfind>'
+    );
+
+    var prop = client.findProperty(
+        requestResponse.getByRequestPath(),
+        new WebDavCurrentUserPrincipal()
+    );
+    return prop.url;
+  }
+
+  /// Returns path to user's home calendar
+  Future<String> getUserHomeCalendar(CalDavClient client) async {
+    String userPrincipal = await getCurrentUserPrincipal(client);
+    var requestResponse = await this.propfind(
+        userPrincipal,
+        body: '<x0:propfind xmlns:x0="DAV:"><x0:prop><x1:calendar-home-set xmlns:x1="urn:ietf:params:xml:ns:caldav"/></x0:prop></x0:propfind>'
+    );
+    var prop = client.findProperty(
+        requestResponse.getByRequestPath(),
+        new CalDavCalendarHomeSet()
+    );
+    return prop.url;
+  }
 
   Future<List<CalDavCalendar>> getCalendars(String calendarPath) async {
     String body = '''<x0:propfind xmlns:x0="DAV:">
@@ -27,7 +56,7 @@ class CalDavClient extends WebDavClient {
 
     List<CalDavCalendar> list = [];
     responses.forEach((response) {
-      var displayName = this.findProperty(response, new WebDavElement('displayname'));
+      var displayName = this.findProperty(response, new WebDavDisplayName());
       list.add(new CalDavCalendar(response.getHref(), displayName.toString()));
     });
 

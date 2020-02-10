@@ -4,7 +4,6 @@ import 'package:http_auth/http_auth.dart' as http_auth;
 import 'dart:developer' as developer;
 import '../element/_elements.dart';
 import './response.dart';
-import './webdav_element.dart';
 
 class WebDavClient {
   String host;
@@ -108,12 +107,12 @@ class WebDavClient {
     return path;
   }
 
-  XmlElement findProperty(WebDavResponse response, XmlElement property, {bool ignoreNamespace = false}) {
+  T findProperty<T extends XmlElement>(WebDavResponse response, T property, {bool ignoreNamespace = false}) {
     for (var propStat in response.propStats) {
       for (var prop in propStat.props) {
         for (var content in prop.content) {
           if ((!ignoreNamespace && content == property) || (ignoreNamespace && content.name == property.name)) {
-            return prop;
+            return prop as T;
           }
         }
       }
