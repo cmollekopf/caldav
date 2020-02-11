@@ -4,9 +4,7 @@ import '../core/webdav_parser.dart';
 
 class StatusParser extends WebDavParser<WebDavStatus> {
   @override
-  String getNodeName() {
-    return 'status';
-  }
+  WebDavStatus getGenericInstance() => WebDavStatus(null);
 
   @override
   WebDavStatus parseSingle(XmlNode node, {bool rescanNs = false}) {

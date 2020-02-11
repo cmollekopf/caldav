@@ -4,9 +4,7 @@ import '../core/webdav_parser.dart';
 
 class DisplayNameParser extends WebDavParser<WebDavDisplayName> {
   @override
-  String getNodeName() {
-    return 'displayname';
-  }
+  WebDavDisplayName getGenericInstance() => new WebDavDisplayName();
 
   @override
   WebDavDisplayName parseSingle(XmlNode node, {bool rescanNs = false}) {

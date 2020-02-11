@@ -6,9 +6,7 @@ import '../element/_elements.dart';
 
 class PropParser extends WebDavParser<WebDavProp> {
   @override
-  String getNodeName() {
-    return 'prop';
-  }
+  WebDavProp getGenericInstance() => new WebDavProp();
 
   @override
   WebDavProp parseSingle(XmlNode node, {bool rescanNs = false}) {

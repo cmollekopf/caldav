@@ -8,10 +8,9 @@ import '../element/_elements.dart';
 import '../core/webdav_parser.dart';
 
 class ResponseParser extends WebDavParser<WebDavResponse> {
+
   @override
-  String getNodeName() {
-    return 'response';
-  }
+  WebDavResponse getGenericInstance() => new WebDavResponse();
 
   List<WebDavResponse> parse(XmlNode node) {
     this.updateNamespaces(node);

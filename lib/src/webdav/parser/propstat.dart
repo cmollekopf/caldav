@@ -12,9 +12,7 @@ class PropStatParser extends WebDavParser<WebDavPropStat> {
   StatusParser statusParser = new StatusParser();
 
   @override
-  String getNodeName() {
-    return 'propstat';
-  }
+  WebDavPropStat getGenericInstance() => new WebDavPropStat(null, null);
 
   @override
   WebDavPropStat parseSingle(XmlNode node, {bool rescanNs = false}) {

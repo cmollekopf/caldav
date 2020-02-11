@@ -1,11 +1,30 @@
+import 'package:caldav/src/core/xmlelement.dart' as core;
 import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/element.dart';
 import 'package:xml/src/xml/nodes/attribute.dart';
 import 'package:xml/src/xml/nodes/document.dart';
 
 abstract class Parser<T> {
-  String getNodeName();
-  String getNodeNamespace();
+  /// provides an instance of the object that is created.
+  /// If it is a [package:caldav/src/core/xmlelement.dart], name and namespace will be fetched from there.
+  /// If it is not, please also override [getNodeNamespace] and [getNodeName].
+  T getGenericInstance();
+
+  String getNodeName() {
+    T instance = this.getGenericInstance();
+    if (instance is core.XmlElement) {
+      return instance.name;
+    }
+    return null;
+  }
+
+  String getNodeNamespace() {
+    T instance = this.getGenericInstance();
+    if (instance is core.XmlElement) {
+      return instance.namespace;
+    }
+    return null;
+  }
 
   String getFullName() {
     String namespaceUrn = this.getNodeNamespace();

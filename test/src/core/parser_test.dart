@@ -11,19 +11,16 @@ bool isHrefProp(o) {
 
 class TestParser extends Parser<String> {
   @override
-  String getNodeName() {
-    return 'multistatus';
-  }
+  String getGenericInstance() => '';
 
   @override
-  String getNodeNamespace() {
-    return 'DAV:';
-  }
+  String getNodeName() => 'multistatus';
 
   @override
-  String parseSingle(xml.XmlNode node, {bool rescanNs = false}) {
-    return '';
-  }
+  String getNodeNamespace() => 'DAV:';
+
+  @override
+  String parseSingle(xml.XmlNode node, {bool rescanNs = false}) => '';
 
 }
 

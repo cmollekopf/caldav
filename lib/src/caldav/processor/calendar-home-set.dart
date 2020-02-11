@@ -5,9 +5,7 @@ import '../caldav_parser.dart';
 
 class CalendarHomeSetProcessor extends CalDavParser<CalDavCalendarHomeSet> {
   @override
-  String getNodeName() {
-    return 'calendar-home-set';
-  }
+  CalDavCalendarHomeSet getGenericInstance() => new CalDavCalendarHomeSet();
 
   @override
   CalDavCalendarHomeSet parseSingle(XmlNode node, {bool rescanNs = false}) {

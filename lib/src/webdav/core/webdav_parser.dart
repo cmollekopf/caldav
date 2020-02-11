@@ -1,5 +1,3 @@
-import 'package:caldav/src/webdav/core/webdav_element.dart';
-
 import '../../core/parser.dart';
 import 'package:caldav/src/core/xmlelement.dart' as core;
 import 'package:xml/src/xml/utils/node_list.dart';
@@ -9,11 +7,6 @@ import 'package:xml/src/xml/nodes/element.dart';
 import '../../core/parser_factory.dart';
 
 abstract class WebDavParser<T> extends Parser<T> {
-  @override
-  String getNodeNamespace() {
-    return webDavNamespace;
-  }
-
   dynamic parseChildren(XmlNodeList<XmlNode> children) {
     if (children.isEmpty) {
       return null;

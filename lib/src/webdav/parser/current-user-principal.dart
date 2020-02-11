@@ -4,9 +4,7 @@ import '../property/current-user-principal.dart';
 
 class CurrentUserPrincipalParser extends WebDavParser<WebDavCurrentUserPrincipal> {
   @override
-  String getNodeName() {
-    return 'current-user-principal';
-  }
+  WebDavCurrentUserPrincipal getGenericInstance() => new WebDavCurrentUserPrincipal();
 
   @override
   WebDavCurrentUserPrincipal parseSingle(XmlNode node, {bool rescanNs = false}) {
