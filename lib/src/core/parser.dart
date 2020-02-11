@@ -59,19 +59,9 @@ abstract class Parser<T> {
   List<XmlAttribute> collectParentAttributes(XmlNode node) {
     List<XmlAttribute> attributes = [];
 
-    // If node is XMlDocument take attributes from first child node
-    // todo: use XmlDocument.rootElement
+    // If node is XMlDocument take attributes from rootElement
     if (node is XmlDocument) {
-      var child = node.children.first;
-      if (child.toString().startsWith('<?xml')) {
-        child = child.nextSibling;
-      }
-      while (child != null && child.text.trim() == '') {
-        child = child.nextSibling;
-      }
-      if (child != null) {
-        node = child;
-      }
+      node = (node as XmlDocument).rootElement;
     }
 
     attributes.addAll(node.attributes);
