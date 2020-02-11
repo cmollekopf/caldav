@@ -7,11 +7,7 @@ class DisplayNameParser extends WebDavParser<WebDavDisplayName> {
   WebDavDisplayName getGenericInstance() => new WebDavDisplayName();
 
   @override
-  WebDavDisplayName parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
-
+  WebDavDisplayName parseSingle(XmlNode node) {
     var returnValue = new WebDavDisplayName();
     returnValue.displayName = this.parseChildren(node.children);
     return returnValue;

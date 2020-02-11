@@ -13,23 +13,11 @@ class ResponseParser extends WebDavParser<WebDavResponse> {
   WebDavResponse getGenericInstance() => new WebDavResponse();
 
   List<WebDavResponse> parse(XmlNode node) {
-    this.updateNamespaces(node);
-    List<WebDavResponse> list = [];
-
-    XmlDocument document = node as XmlDocument;
-
-    document.findAllElements(this.getFullName()).forEach((element) {
-      list.add(parseSingle(element));
-    });
-
-    return list;
+    return super.parse((node as XmlDocument).rootElement);
   }
 
   @override
-  WebDavResponse parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
+  WebDavResponse parseSingle(XmlNode node) {
     XmlElement response = node as XmlElement;
     WebDavResponse responseObj = new WebDavResponse();
 

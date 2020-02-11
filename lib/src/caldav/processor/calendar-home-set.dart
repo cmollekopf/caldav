@@ -8,11 +8,7 @@ class CalendarHomeSetProcessor extends CalDavParser<CalDavCalendarHomeSet> {
   CalDavCalendarHomeSet getGenericInstance() => new CalDavCalendarHomeSet();
 
   @override
-  CalDavCalendarHomeSet parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
-
+  CalDavCalendarHomeSet parseSingle(XmlNode node) {
     var returnValue = new CalDavCalendarHomeSet();
     returnValue.url = this.parseChildren(node.children);
     return returnValue;

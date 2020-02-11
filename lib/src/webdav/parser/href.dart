@@ -13,10 +13,7 @@ class HrefParser extends WebDavParser<String> {
   String getNodeNamespace() => webDavNamespace;
 
   @override
-  String parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
+  String parseSingle(XmlNode node) {
     return node.text;
   }
 }

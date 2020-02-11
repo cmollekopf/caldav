@@ -7,11 +7,7 @@ class CurrentUserPrincipalParser extends WebDavParser<WebDavCurrentUserPrincipal
   WebDavCurrentUserPrincipal getGenericInstance() => new WebDavCurrentUserPrincipal();
 
   @override
-  WebDavCurrentUserPrincipal parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
-
+  WebDavCurrentUserPrincipal parseSingle(XmlNode node) {
     var returnValue = new WebDavCurrentUserPrincipal();
     returnValue.url = this.parseChildren(node.children);
     return returnValue;

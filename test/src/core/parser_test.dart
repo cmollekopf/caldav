@@ -20,7 +20,7 @@ class TestParser extends Parser<String> {
   String getNodeNamespace() => 'DAV:';
 
   @override
-  String parseSingle(xml.XmlNode node, {bool rescanNs = false}) => '';
+  String parseSingle(xml.XmlNode node) => '';
 
 }
 

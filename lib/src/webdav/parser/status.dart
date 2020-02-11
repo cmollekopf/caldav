@@ -7,10 +7,7 @@ class StatusParser extends WebDavParser<WebDavStatus> {
   WebDavStatus getGenericInstance() => WebDavStatus(null);
 
   @override
-  WebDavStatus parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
+  WebDavStatus parseSingle(XmlNode node) {
     return new WebDavStatus(node.text);
   }
 }

@@ -9,11 +9,7 @@ class PropParser extends WebDavParser<WebDavProp> {
   WebDavProp getGenericInstance() => new WebDavProp();
 
   @override
-  WebDavProp parseSingle(XmlNode node, {bool rescanNs = false}) {
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
-
+  WebDavProp parseSingle(XmlNode node) {
     XmlElement element = node as XmlElement;
     WebDavProp propObj = new WebDavProp();
     propObj.content = this.parseChildren(element.children);

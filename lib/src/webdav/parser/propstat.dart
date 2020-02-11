@@ -15,11 +15,8 @@ class PropStatParser extends WebDavParser<WebDavPropStat> {
   WebDavPropStat getGenericInstance() => new WebDavPropStat(null, null);
 
   @override
-  WebDavPropStat parseSingle(XmlNode node, {bool rescanNs = false}) {
+  WebDavPropStat parseSingle(XmlNode node) {
     XmlElement propStat = node as XmlElement;
-    if (rescanNs) {
-      this.updateNamespaces(node);
-    }
 
     // parse properties and status
     List<WebDavProp> props = propParser.parse(propStat);

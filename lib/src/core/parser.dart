@@ -95,5 +95,5 @@ abstract class Parser<T> {
     return list;
   }
 
-  T parseSingle(XmlNode node, {bool rescanNs = false});
+  T parseSingle(XmlNode node);
 }
