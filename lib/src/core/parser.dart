@@ -41,6 +41,7 @@ abstract class Parser<T> {
     List<XmlAttribute> attributes = [];
 
     // If node is XMlDocument take attributes from first child node
+    // todo: use XmlDocument.rootElement
     if (node is XmlDocument) {
       var child = node.children.first;
       if (child.toString().startsWith('<?xml')) {

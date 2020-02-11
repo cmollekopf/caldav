@@ -13,4 +13,14 @@ void main() {
     expect(result.length, 1);
     expect(result.first.url, 'test');
   });
+
+  test('process empty XML node', () async {
+    var processor = new CalendarHomeSetProcessor();
+
+    var node = xml.parse('<data xmlns:x0="urn:ietf:params:xml:ns:caldav"><x0:calendar-home-set/></data>');
+
+    var result = processor.parse(node.firstChild);
+    expect(result.length, 1);
+    expect(result.first.url, null);
+  });
 }

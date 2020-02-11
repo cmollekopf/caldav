@@ -13,4 +13,14 @@ void main() {
     expect(result.length, 1);
     expect(result.first.url, 'test');
   });
+
+  test('process empty XML node', () async {
+    var processor = new CurrentUserPrincipalParser();
+
+    var node = xml.parse('<data xmlns:x0="DAV:"><x0:current-user-principal/></data>');
+
+    var result = processor.parse(node.firstChild);
+    expect(result.length, 1);
+    expect(result.first.url, null);
+  });
 }

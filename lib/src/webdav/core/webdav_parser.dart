@@ -15,6 +15,9 @@ abstract class WebDavParser<T> extends Parser<T> {
   }
 
   dynamic parseChildren(XmlNodeList<XmlNode> children) {
+    if (children.isEmpty) {
+      return null;
+    }
     String stringReturnValue;
     List<core.XmlElement> propList = new List<core.XmlElement>();
     for (var child in children) {
