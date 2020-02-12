@@ -1,4 +1,4 @@
-import '../core/webdav_element.dart';
+import '../webdav_element.dart';
 import '../../core/xmlelement.dart';
 
 /// <prop> element described in RFC 4918

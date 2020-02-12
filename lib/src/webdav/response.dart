@@ -1,9 +1,9 @@
 import 'package:caldav/src/core/utility/string.dart';
 
-import '../element/response.dart';
+import 'element/response.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
-import '../parser/response.dart';
+import 'parser/response.dart';
 
 /// Internal object to serve WebDav responses. Not RFC related.
 class Response {

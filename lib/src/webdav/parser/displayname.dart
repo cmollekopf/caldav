@@ -1,6 +1,6 @@
 import 'package:caldav/src/webdav/property/displayname.dart';
 import 'package:xml/src/xml/nodes/node.dart';
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 
 class DisplayNameParser extends WebDavParser<WebDavDisplayName> {
   @override

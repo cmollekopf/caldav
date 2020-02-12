@@ -1,10 +1,10 @@
-import '../../core/parser.dart';
+import '../core/parser.dart';
 import 'package:caldav/src/core/xmlelement.dart' as core;
 import 'package:xml/src/xml/utils/node_list.dart';
 import 'package:xml/src/xml/nodes/text.dart';
 import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/element.dart';
-import '../../core/parser_factory.dart';
+import '../core/parser_factory.dart';
 
 abstract class WebDavParser<T> extends Parser<T> {
   dynamic parseChildren(XmlNodeList<XmlNode> children) {

@@ -1,6 +1,6 @@
-import 'package:caldav/src/webdav/core/webdav_element.dart';
+import 'package:caldav/src/webdav/webdav_element.dart';
 import 'package:xml/src/xml/nodes/node.dart';
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 
 class HrefParser extends WebDavParser<String> {
   @override

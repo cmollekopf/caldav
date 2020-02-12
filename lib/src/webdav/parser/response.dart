@@ -1,11 +1,11 @@
-import 'package:caldav/src/webdav/core/webdav_element.dart';
+import 'package:caldav/src/webdav/webdav_element.dart';
 import 'package:caldav/src/core/parser_factory.dart';
 import 'package:caldav/src/webdav/parser/propstat.dart';
 import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/document.dart';
 import 'package:xml/src/xml/nodes/element.dart';
 import '../element/_elements.dart';
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 
 class ResponseParser extends WebDavParser<WebDavResponse> {
   @override

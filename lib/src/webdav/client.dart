@@ -3,8 +3,8 @@ import 'package:caldav/src/core/xmlelement.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_auth/http_auth.dart' as http_auth;
 import 'dart:developer' as developer;
-import '../element/_elements.dart';
-import './response.dart';
+import 'element/_elements.dart';
+import 'response.dart';
 
 class WebDavClient {
   String host;

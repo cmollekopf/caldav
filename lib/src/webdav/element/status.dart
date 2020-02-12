@@ -1,4 +1,4 @@
-import '../core/webdav_element.dart';
+import '../webdav_element.dart';
 
 /// <status> element described in RFC 4918
 class WebDavStatus extends WebDavElement {

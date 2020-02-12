@@ -4,7 +4,7 @@ import 'package:xml/src/xml/nodes/node.dart';
 import 'package:xml/src/xml/nodes/element.dart';
 import 'package:xml/src/xml/utils/node_list.dart';
 
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 import '../element/_elements.dart';
 
 class PropStatParser extends WebDavParser<WebDavPropStat> {

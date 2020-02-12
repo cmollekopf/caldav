@@ -1,6 +1,6 @@
 import './prop.dart';
 import './status.dart';
-import '../core/webdav_element.dart';
+import '../webdav_element.dart';
 
 /// <propstat> element described in RFC 4918
 class WebDavPropStat extends WebDavElement {

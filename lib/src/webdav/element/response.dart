@@ -1,5 +1,5 @@
 import './propstat.dart';
-import '../core/webdav_element.dart';
+import '../webdav_element.dart';
 
 /// <response> element described in RFC 4918
 class WebDavResponse extends WebDavElement {

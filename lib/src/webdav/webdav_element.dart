@@ -1,4 +1,4 @@
-import '../../core/xmlelement.dart';
+import '../core/xmlelement.dart';
 
 const webDavNamespace = 'DAV:';
 

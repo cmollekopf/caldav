@@ -1,5 +1,5 @@
 import 'package:xml/src/xml/nodes/node.dart';
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 import '../property/current-user-principal.dart';
 
 class CurrentUserPrincipalParser

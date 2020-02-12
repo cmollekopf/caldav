@@ -1,6 +1,6 @@
 import 'package:xml/src/xml/nodes/node.dart';
 import '../element/status.dart';
-import '../core/webdav_parser.dart';
+import '../webdav_parser.dart';
 
 class StatusParser extends WebDavParser<WebDavStatus> {
   @override
