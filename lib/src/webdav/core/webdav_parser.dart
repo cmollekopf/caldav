@@ -40,7 +40,10 @@ abstract class WebDavParser<T> extends Parser<T> {
           propList.add(parsedValue);
         }
       } on StateError catch (_) {
-        throw new UnimplementedError("Missing processor for node " + name + " in namespace " + namespaceUri);
+        throw new UnimplementedError("Missing processor for node " +
+            name +
+            " in namespace " +
+            namespaceUri);
       }
     }
     return propList;

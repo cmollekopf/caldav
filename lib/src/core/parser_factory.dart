@@ -31,6 +31,7 @@ class ParserFactory {
   }
 
   Parser getParser(String name, String namespace) {
-    return this.parsers.firstWhere((parser) => parser.getNodeName() == name && parser.getNodeNamespace() == namespace);
+    return this.parsers.firstWhere((parser) =>
+        parser.getNodeName() == name && parser.getNodeNamespace() == namespace);
   }
 }

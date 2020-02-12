@@ -2,7 +2,7 @@ import '../core/webdav_element.dart';
 
 /// <status> element described in RFC 4918
 class WebDavStatus extends WebDavElement {
-  WebDavStatus(this.httpStatus): super('status');
+  WebDavStatus(this.httpStatus) : super('status');
 
   String httpStatus;
 

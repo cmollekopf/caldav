@@ -21,7 +21,6 @@ class TestParser extends Parser<String> {
 
   @override
   String parseSingle(xml.XmlNode node) => '';
-
 }
 
 void main() {

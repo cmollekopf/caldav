@@ -36,6 +36,7 @@ abstract class Parser<T> {
 
   /// maps ns => full/namespace/urn
   Map<String, String> namespaceMap = {};
+
   /// maps full/namespace/urn => ns
   Map<String, String> pathToNamespaceMap = {};
 
@@ -43,7 +44,8 @@ abstract class Parser<T> {
     List<XmlAttribute> xmlAttributes = collectParentAttributes(node);
     // todo: consider global xmlns as well
     RegExp re = new RegExp(r'xmlns:(\w+)="([\w\W]+)"');
-    xmlAttributes.removeWhere((attribute) => !re.hasMatch(attribute.toString()));
+    xmlAttributes
+        .removeWhere((attribute) => !re.hasMatch(attribute.toString()));
 
     this.namespaceMap = {};
     xmlAttributes.forEach((attribute) {
@@ -68,7 +70,8 @@ abstract class Parser<T> {
 
     if (node.hasParent && !(node.parent is XmlDocument)) {
       var parentAttributes = collectParentAttributes(node.parent);
-      parentAttributes.removeWhere((attribute) => attributes.indexOf(attribute) != -1);
+      parentAttributes
+          .removeWhere((attribute) => attributes.indexOf(attribute) != -1);
       attributes.addAll(parentAttributes);
     }
     return attributes;

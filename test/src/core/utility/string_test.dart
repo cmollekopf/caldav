@@ -9,11 +9,16 @@ bool isHrefProp(o) {
 
 void main() {
   test('sanitize path', () {
-    expect(StringUtility.sanitizePath('/test/', baseUrl: 'abc'), 'test'); // remove first and last slash
-    expect(StringUtility.sanitizePath('/test', baseUrl: 'abc'), 'test'); // remove first slash
-    expect(StringUtility.sanitizePath('test/', baseUrl: 'abc'), 'test'); // remove last slash
-    expect(StringUtility.sanitizePath('/abc/test/', baseUrl: 'abc'), 'test'); // remove requestPath
-    expect(StringUtility.sanitizePath('/abc/test', baseUrl: 'abc'), 'test'); // remove requestPath
+    expect(StringUtility.sanitizePath('/test/', baseUrl: 'abc'),
+        'test'); // remove first and last slash
+    expect(StringUtility.sanitizePath('/test', baseUrl: 'abc'),
+        'test'); // remove first slash
+    expect(StringUtility.sanitizePath('test/', baseUrl: 'abc'),
+        'test'); // remove last slash
+    expect(StringUtility.sanitizePath('/abc/test/', baseUrl: 'abc'),
+        'test'); // remove requestPath
+    expect(StringUtility.sanitizePath('/abc/test', baseUrl: 'abc'),
+        'test'); // remove requestPath
   });
 
   test('get full path', () {

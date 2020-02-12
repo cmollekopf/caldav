@@ -7,8 +7,10 @@ import '../parser/response.dart';
 
 /// Internal object to serve WebDav responses. Not RFC related.
 class Response {
-  String requestPath; // Request path in http://[baseurl]/[apiPath]/[requestpath], e.g. "calendar" in http://baseurl.com/api/calendar
-  String requestApiPath; // apiPath in http://[baseurl]/[apiPath]/[requestPath], e.g. "api" in http://baseurl.com/api/calendar
+  String
+      requestPath; // Request path in http://[baseurl]/[apiPath]/[requestpath], e.g. "calendar" in http://baseurl.com/api/calendar
+  String
+      requestApiPath; // apiPath in http://[baseurl]/[apiPath]/[requestPath], e.g. "api" in http://baseurl.com/api/calendar
 
   http.Response rawResponse;
 
@@ -22,7 +24,9 @@ class Response {
   }
 
   WebDavResponse getByPath(String remotePath) {
-    return this.responses.firstWhere((response) => response.getHref() == StringUtility.getFullPath(this.requestApiPath, remotePath));
+    return this.responses.firstWhere((response) =>
+        response.getHref() ==
+        StringUtility.getFullPath(this.requestApiPath, remotePath));
   }
 
   WebDavResponse getByRequestPath() {
@@ -31,7 +35,9 @@ class Response {
 
   List<WebDavResponse> getResponsesWithoutRequestHref() {
     var responses = this.responses;
-    responses.removeWhere((response) => response.getHref() == StringUtility.getFullPath(this.requestApiPath, this.requestPath));
+    responses.removeWhere((response) =>
+        response.getHref() ==
+        StringUtility.getFullPath(this.requestApiPath, this.requestPath));
     return responses;
   }
 }

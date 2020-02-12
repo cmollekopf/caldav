@@ -20,17 +20,15 @@ class PropStatParser extends WebDavParser<WebDavPropStat> {
 
     // parse properties and status
     List<WebDavProp> props = propParser.parse(propStat);
-    WebDavPropStat propStatObj = new WebDavPropStat(
-        props.elementAt(0),
-        statusParser.parse(node).first
-    );
+    WebDavPropStat propStatObj =
+        new WebDavPropStat(props.elementAt(0), statusParser.parse(node).first);
     propStatObj.props = props;
 
     return propStatObj;
   }
 
   @override
+
   /// No parsing required. Children are processed in [parseSingle]
-  dynamic parseChildren(XmlNodeList<XmlNode> children) {
-  }
+  dynamic parseChildren(XmlNodeList<XmlNode> children) {}
 }

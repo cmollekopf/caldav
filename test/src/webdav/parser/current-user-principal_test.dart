@@ -7,7 +7,8 @@ void main() {
   test('process XML node', () async {
     var processor = new CurrentUserPrincipalParser();
 
-    var node = xml.parse('<data xmlns:x0="DAV:"><x0:current-user-principal><x0:href>test</x0:href></x0:current-user-principal></data>');
+    var node = xml.parse(
+        '<data xmlns:x0="DAV:"><x0:current-user-principal><x0:href>test</x0:href></x0:current-user-principal></data>');
 
     var result = processor.parse(node.firstChild);
     expect(result.length, 1);
@@ -17,7 +18,8 @@ void main() {
   test('process empty XML node', () async {
     var processor = new CurrentUserPrincipalParser();
 
-    var node = xml.parse('<data xmlns:x0="DAV:"><x0:current-user-principal/></data>');
+    var node =
+        xml.parse('<data xmlns:x0="DAV:"><x0:current-user-principal/></data>');
 
     var result = processor.parse(node.firstChild);
     expect(result.length, 1);

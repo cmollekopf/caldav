@@ -9,7 +9,7 @@ class WebDavPropStat extends WebDavElement {
   List<WebDavProp> props = [];
 
   /// The propstat XML element MUST contain one prop XML element and one status XML element.
-  WebDavPropStat(WebDavProp prop, this.status): super('propstat') {
+  WebDavPropStat(WebDavProp prop, this.status) : super('propstat') {
     this.addProp(prop);
   }
 

@@ -17,13 +17,8 @@ class WebDavClient {
 
   http_auth.BasicAuthClient concreteClient;
 
-  WebDavClient(
-      String host,
-      String username,
-      String password,
-      String path,
-      {String protocol = 'http', int port, http.BaseClient httpClient}
-  ) {
+  WebDavClient(String host, String username, String password, String path,
+      {String protocol = 'http', int port, http.BaseClient httpClient}) {
     this.baseUrl = "$protocol://$host";
     if (port != null) {
       this.baseUrl = "$protocol://$host:$port";
@@ -31,7 +26,7 @@ class WebDavClient {
 
     // BaseURL must not end with /
     if (this.baseUrl.endsWith('"')) {
-      this.baseUrl = this.baseUrl.substring(0, this.baseUrl.length-1);
+      this.baseUrl = this.baseUrl.substring(0, this.baseUrl.length - 1);
     }
 
     this.path = path;
@@ -39,11 +34,8 @@ class WebDavClient {
       this.baseUrl = [this.baseUrl, this.path].join('/');
     }
 
-    this.concreteClient = new http_auth.BasicAuthClient(
-        username,
-        password,
-        inner: httpClient
-    );
+    this.concreteClient =
+        new http_auth.BasicAuthClient(username, password, inner: httpClient);
   }
 
   String getUrl(String path) {
@@ -56,10 +48,11 @@ class WebDavClient {
     return [this.baseUrl, path].join('/');
   }
 
-  Future<Response> put(String remotePath, {String body, Map<String, String> headers}) async {
+  Future<Response> put(String remotePath,
+      {String body, Map<String, String> headers}) async {
     remotePath = StringUtility.sanitizePath(remotePath, baseUrl: this.path);
-    http.Response response = await this
-        ._send('PUT', remotePath, headers: headers, body: body);
+    http.Response response =
+        await this._send('PUT', remotePath, headers: headers, body: body);
     return new Response(response, remotePath, this.path);
   }
 
@@ -73,8 +66,8 @@ class WebDavClient {
   }
 
   /// send the actual HTTP request with given [method] and [path]
-  Future<http.Response> _send(
-      String method, String path, {String body, Map<String, String> headers}) async {
+  Future<http.Response> _send(String method, String path,
+      {String body, Map<String, String> headers}) async {
     String url = this.getUrl(path);
     var request = http.Request(method, Uri.parse(url));
 
@@ -84,18 +77,22 @@ class WebDavClient {
     }
 
     developer.log("Connecting to $url");
-    var response = await http.Response.fromStream(await this.concreteClient.send(request));
+    var response =
+        await http.Response.fromStream(await this.concreteClient.send(request));
     if (response.statusCode == 301) {
-      return this._send(method, response.headers['location'], body: body, headers: headers);
+      return this._send(method, response.headers['location'],
+          body: body, headers: headers);
     }
     return response;
   }
 
-  T findProperty<T extends XmlElement>(WebDavResponse response, T property, {bool ignoreNamespace = false}) {
+  T findProperty<T extends XmlElement>(WebDavResponse response, T property,
+      {bool ignoreNamespace = false}) {
     for (var propStat in response.propStats) {
       for (var prop in propStat.props) {
         for (var content in prop.content) {
-          if ((!ignoreNamespace && content == property) || (ignoreNamespace && content.name == property.name)) {
+          if ((!ignoreNamespace && content == property) ||
+              (ignoreNamespace && content.name == property.name)) {
             return content as T;
           }
         }

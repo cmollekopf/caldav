@@ -19,5 +19,4 @@ void main() {
     // has propstat
     expect(result.elementAt(0).propStats.length, 1);
   });
-
 }
