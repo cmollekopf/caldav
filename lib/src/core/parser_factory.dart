@@ -1,12 +1,7 @@
+import 'package:caldav/src/caldav/property/calendar-home-set.dart';
 import 'package:caldav/src/core/parser.dart';
-import 'package:caldav/src/webdav/parser/displayname.dart';
-import 'package:caldav/src/webdav/parser/status.dart';
-import 'package:caldav/src/webdav/parser/prop.dart';
-import 'package:caldav/src/webdav/parser/propstat.dart';
-import 'package:caldav/src/webdav/parser/href.dart';
-import 'package:caldav/src/webdav/parser/response.dart';
-import 'package:caldav/src/webdav/parser/current-user-principal.dart';
-import 'package:caldav/src/caldav/processor/calendar-home-set.dart';
+import 'package:caldav/src/webdav/element/_elements.dart';
+import 'package:caldav/src/webdav/property/_properties.dart';
 
 class ParserFactory {
   static final ParserFactory _instance = ParserFactory._internal();
@@ -16,17 +11,19 @@ class ParserFactory {
 
   ParserFactory._internal() {
     this.parsers = [
-      // WebDav
+      // WebDav Elements
       new PropParser(),
-      new HrefParser(),
       new PropStatParser(),
       new ResponseParser(),
       new StatusParser(),
+
+      // WebDav Properties
+      new HrefParser(),
       new CurrentUserPrincipalParser(),
       new DisplayNameParser(),
 
-      // CalDav
-      new CalendarHomeSetProcessor(),
+      // CalDav Properties
+      new CalendarHomeSetParser(),
     ];
   }
 

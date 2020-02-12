@@ -1,4 +1,4 @@
-import 'package:caldav/src/webdav/parser/current-user-principal.dart';
+import 'package:caldav/src/webdav/property/current-user-principal.dart';
 import 'package:test/test.dart';
 
 import 'package:xml/xml.dart' as xml;

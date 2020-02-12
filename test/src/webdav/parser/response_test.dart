@@ -1,4 +1,4 @@
-import 'package:caldav/src/webdav/parser/response.dart';
+import 'package:caldav/src/webdav/element/_elements.dart';
 import 'package:test/test.dart';
 import '../../../_fixtures/caldav_data.dart' as data;
 
