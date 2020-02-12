@@ -1,11 +1,11 @@
-import 'package:caldav/src/webdav/property/current-user-principal.dart';
+import 'package:caldav/src/webdav/property/current_user_principal.dart';
 import 'package:test/test.dart';
 
 import 'package:xml/xml.dart' as xml;
 
 void main() {
   test('process XML node', () async {
-    var processor = new CurrentUserPrincipalParser();
+    var processor = CurrentUserPrincipalParser();
 
     var node = xml.parse(
         '<data xmlns:x0="DAV:"><x0:current-user-principal><x0:href>test</x0:href></x0:current-user-principal></data>');
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('process empty XML node', () async {
-    var processor = new CurrentUserPrincipalParser();
+    var processor = CurrentUserPrincipalParser();
 
     var node =
         xml.parse('<data xmlns:x0="DAV:"><x0:current-user-principal/></data>');

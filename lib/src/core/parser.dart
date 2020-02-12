@@ -1,37 +1,37 @@
-import 'package:caldav/src/core/xmlelement.dart' as core;
-import 'package:xml/src/xml/nodes/node.dart';
-import 'package:xml/src/xml/nodes/element.dart';
-import 'package:xml/src/xml/nodes/attribute.dart';
-import 'package:xml/src/xml/nodes/document.dart';
+import 'package:xml/xml.dart';
+import 'xmlelement.dart' as core;
 
+/// Base for parsers that process [XmlNode] into another data type
+/// todo: rename to Mapper
 abstract class Parser<T> {
   /// provides an instance of the object that is created.
-  /// If it is a [package:caldav/src/core/xmlelement.dart], name and namespace will be fetched from there.
-  /// If it is not, please also override [getNodeNamespace] and [getNodeName].
   T getGenericInstance();
 
-  String getNodeName() {
-    T instance = this.getGenericInstance();
+  /// Get node name from instance in [getGenericInstance].
+  /// Override this if [T] is not an instance of [core.XmlElement]
+  String get nodeName {
+    var instance = getGenericInstance();
     if (instance is core.XmlElement) {
       return instance.name;
     }
     return null;
   }
 
-  String getNodeNamespace() {
-    T instance = this.getGenericInstance();
+  /// Get node namespace from instance in [getGenericInstance].
+  /// Override this if [T] is not an instance of [core.XmlElement]
+  String get nodeNamespace {
+    var instance = getGenericInstance();
     if (instance is core.XmlElement) {
       return instance.namespace;
     }
     return null;
   }
 
-  String getFullName() {
-    String namespaceUrn = this.getNodeNamespace();
-    if (!this.pathToNamespaceMap.containsKey(namespaceUrn)) {
-      throw new ArgumentError('Unknown namespace path ' + namespaceUrn);
+  String _getFullName() {
+    if (!pathToNamespaceMap.containsKey(nodeNamespace)) {
+      throw ArgumentError('Unknown namespace path "$nodeNamespace"');
     }
-    return this.pathToNamespaceMap[namespaceUrn] + ':' + this.getNodeName();
+    return '${pathToNamespaceMap[nodeNamespace]}:$nodeName';
   }
 
   /// maps ns => full/namespace/urn
@@ -40,26 +40,29 @@ abstract class Parser<T> {
   /// maps full/namespace/urn => ns
   Map<String, String> pathToNamespaceMap = {};
 
-  updateNamespaces(XmlNode node) {
-    List<XmlAttribute> xmlAttributes = collectParentAttributes(node);
+  /// Updates [namespaceMap] which is used to map XML shortCodes to namespace
+  void updateNamespaces(XmlNode node) {
+    var xmlAttributes = _collectParentAttributes(node);
     // todo: consider global xmlns as well
-    RegExp re = new RegExp(r'xmlns:(\w+)="([\w\W]+)"');
+    var re = RegExp(r'xmlns:(\w+)="([\w\W]+)"');
     xmlAttributes
         .removeWhere((attribute) => !re.hasMatch(attribute.toString()));
 
-    this.namespaceMap = {};
-    xmlAttributes.forEach((attribute) {
+    namespaceMap = {};
+    for (var attribute in xmlAttributes) {
       re.allMatches(attribute.toString()).forEach((match) {
-        String name = match.group(1);
-        String path = match.group(2);
+        var name = match.group(1);
+        var path = match.group(2);
         namespaceMap[name] = path;
         pathToNamespaceMap[path] = name;
       });
-    });
+    }
   }
 
-  List<XmlAttribute> collectParentAttributes(XmlNode node) {
-    List<XmlAttribute> attributes = [];
+  /// Collects attributes from parent nodes
+  List<XmlAttribute> _collectParentAttributes(XmlNode node) {
+    // ignore: prefer_collection_literals
+    var attributes = List<XmlAttribute>();
 
     // If node is XMlDocument take attributes from rootElement
     if (node is XmlDocument) {
@@ -69,7 +72,7 @@ abstract class Parser<T> {
     attributes.addAll(node.attributes);
 
     if (node.hasParent && !(node.parent is XmlDocument)) {
-      var parentAttributes = collectParentAttributes(node.parent);
+      var parentAttributes = _collectParentAttributes(node.parent);
       parentAttributes
           .removeWhere((attribute) => attributes.indexOf(attribute) != -1);
       attributes.addAll(parentAttributes);
@@ -77,16 +80,19 @@ abstract class Parser<T> {
     return attributes;
   }
 
+  /// Look for processable nodes in [node] and process them
   List<T> parse(XmlNode node) {
-    this.updateNamespaces(node);
-    List<T> list = [];
+    updateNamespaces(node);
+    // ignore: prefer_collection_literals
+    var list = List<T>();
 
-    (node as XmlElement).findAllElements(this.getFullName()).forEach((element) {
+    (node as XmlElement).findAllElements(_getFullName()).forEach((element) {
       list.add(parseSingle(element));
     });
 
     return list;
   }
 
+  /// Processes a single [node]
   T parseSingle(XmlNode node);
 }

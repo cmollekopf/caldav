@@ -1,16 +1,22 @@
-import 'package:xml/src/xml/nodes/element.dart' as xml;
-import 'package:xml/src/xml/nodes/node.dart' as xml;
+import 'package:xml/xml.dart' as xml;
+import 'package:quiver/core.dart';
 
+/// For XmlNode-based objects
 class XmlElement {
+  /// Name of XML element
   String name;
+
+  /// Namespace of XML element (not short code)
   String namespace;
 
+  /// Constructs a new XmlElement
   XmlElement({this.name, this.namespace});
 
-  XmlElement.fromXmlNode(xml.XmlNode node) {
-    xml.XmlElement element = node as xml.XmlElement;
-    this.name = element.name.local;
-    this.namespace = element.name.namespaceUri;
+  /// Creates an XmlElement off a XmlNode from xml package
+  factory XmlElement.fromXmlNode(xml.XmlNode node) {
+    var element = node as xml.XmlElement;
+    return XmlElement(
+        name: element.name.local, namespace: element.name.namespaceUri);
   }
 
   @override
@@ -19,11 +25,11 @@ class XmlElement {
   }
 
   @override
-  bool operator ==(o) {
-    return o is XmlElement && name == o.name && namespace == o.namespace;
-  }
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes, type_annotate_public_apis
+  bool operator ==(o) =>
+      o is XmlElement && name == o.name && namespace == o.namespace;
 
-  String toXmlName() {
-    return this.namespace + ':' + this.name;
-  }
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  int get hashCode => hash2(name.hashCode, namespace.hashCode);
 }

@@ -1,12 +1,6 @@
 import 'package:caldav/src/core/utility/string.dart';
 import 'package:test/test.dart';
 
-import 'package:caldav/src/core/xmlelement.dart';
-
-bool isHrefProp(o) {
-  return o == new XmlElement(name: 'href');
-}
-
 void main() {
   test('sanitize path', () {
     expect(StringUtility.sanitizePath('/test/', baseUrl: 'abc'),

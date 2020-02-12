@@ -1,5 +1,5 @@
-import 'package:caldav/src/webdav/webdav_element.dart';
-import 'package:xml/src/xml/nodes/node.dart';
+import 'package:xml/xml.dart';
+import '../webdav_element.dart';
 import '../webdav_parser.dart';
 
 class HrefParser extends WebDavParser<String> {
@@ -7,10 +7,10 @@ class HrefParser extends WebDavParser<String> {
   String getGenericInstance() => '';
 
   @override
-  String getNodeName() => 'href';
+  String get nodeName => 'href';
 
   @override
-  String getNodeNamespace() => webDavNamespace;
+  String get nodeNamespace => webDavNamespace;
 
   @override
   String parseSingle(XmlNode node) {

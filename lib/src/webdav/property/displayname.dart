@@ -1,7 +1,6 @@
-import 'package:caldav/src/webdav/webdav_parser.dart';
 import 'package:xml/xml.dart';
-
 import '../webdav_element.dart';
+import '../webdav_parser.dart';
 
 class WebDavDisplayName extends WebDavElement {
   WebDavDisplayName() : super('displayname');
@@ -11,12 +10,12 @@ class WebDavDisplayName extends WebDavElement {
 
 class DisplayNameParser extends WebDavParser<WebDavDisplayName> {
   @override
-  WebDavDisplayName getGenericInstance() => new WebDavDisplayName();
+  WebDavDisplayName getGenericInstance() => WebDavDisplayName();
 
   @override
   WebDavDisplayName parseSingle(XmlNode node) {
-    var returnValue = new WebDavDisplayName();
-    returnValue.displayName = this.parseChildren(node.children);
+    var returnValue = WebDavDisplayName();
+    returnValue.displayName = parseChildren(node.children);
     return returnValue;
   }
 }

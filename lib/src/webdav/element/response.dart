@@ -1,18 +1,19 @@
-import 'package:caldav/src/core/parser_factory.dart';
-import 'package:caldav/src/webdav/element/propstat.dart';
-import 'package:caldav/src/webdav/webdav_element.dart';
-import 'package:caldav/src/webdav/webdav_parser.dart';
 import 'package:xml/xml.dart';
+import '../../core/parser_factory.dart';
+import '../webdav_element.dart';
+import '../webdav_parser.dart';
+import 'propstat.dart';
 
 /// <response> element described in RFC 4918
 class WebDavResponse extends WebDavElement {
   WebDavResponse() : super('response');
 
-  /// The 'href' element contains an HTTP URL pointing to a WebDAV resource when used in the 'response' container.
+  /// The 'href' element contains an HTTP URL pointing to
+  /// a WebDAV resource when used in the 'response' container.
   String href;
 
   String getHref() {
-    return this.href;
+    return href;
   }
 
   List<WebDavPropStat> propStats;
@@ -20,7 +21,7 @@ class WebDavResponse extends WebDavElement {
 
 class ResponseParser extends WebDavParser<WebDavResponse> {
   @override
-  WebDavResponse getGenericInstance() => new WebDavResponse();
+  WebDavResponse getGenericInstance() => WebDavResponse();
 
   List<WebDavResponse> parse(XmlNode node) {
     return super.parse((node as XmlDocument).rootElement);
@@ -28,14 +29,14 @@ class ResponseParser extends WebDavParser<WebDavResponse> {
 
   @override
   WebDavResponse parseSingle(XmlNode node) {
-    XmlElement response = node as XmlElement;
-    WebDavResponse responseObj = new WebDavResponse();
+    var response = node as XmlElement;
+    var responseObj = WebDavResponse();
 
     responseObj.href = ParserFactory()
         .getParser('href', webDavNamespace)
         .parse(response)
         .first;
-    responseObj.propStats = new PropStatParser().parse(response);
+    responseObj.propStats = PropStatParser().parse(response);
     return responseObj;
   }
 }

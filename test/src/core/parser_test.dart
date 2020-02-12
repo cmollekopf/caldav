@@ -1,23 +1,17 @@
 import 'package:caldav/src/core/parser.dart';
 import 'package:test/test.dart';
 import 'package:xml/xml.dart' as xml;
-
 import '../../_fixtures/caldav_data.dart' as data;
-import 'package:caldav/src/core/xmlelement.dart';
-
-bool isHrefProp(o) {
-  return o == new XmlElement(name: 'href');
-}
 
 class TestParser extends Parser<String> {
   @override
   String getGenericInstance() => '';
 
   @override
-  String getNodeName() => 'multistatus';
+  String get nodeName => 'multistatus';
 
   @override
-  String getNodeNamespace() => 'DAV:';
+  String get nodeNamespace => 'DAV:';
 
   @override
   String parseSingle(xml.XmlNode node) => '';
@@ -27,7 +21,7 @@ void main() {
   test('collect namespaces into a Map', () {
     var xmlDocument = xml.parse(data.nextCloudCurrentUser);
 
-    TestParser parser = new TestParser();
+    var parser = TestParser();
     parser.parse(xmlDocument.rootElement);
 
     expect(parser.namespaceMap.length, 4);

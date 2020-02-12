@@ -1,7 +1,6 @@
-import 'package:caldav/src/webdav/webdav_parser.dart';
 import 'package:xml/xml.dart';
-
 import '../webdav_element.dart';
+import '../webdav_parser.dart';
 
 /// <status> element described in RFC 4918
 class WebDavStatus extends WebDavElement {
@@ -11,12 +10,12 @@ class WebDavStatus extends WebDavElement {
 
   /// Holds a single HTTP status-line.
   String getStatus() {
-    return this.httpStatus;
+    return httpStatus;
   }
 
   @override
   String toString() {
-    return this.httpStatus;
+    return httpStatus;
   }
 }
 
@@ -26,6 +25,6 @@ class StatusParser extends WebDavParser<WebDavStatus> {
 
   @override
   WebDavStatus parseSingle(XmlNode node) {
-    return new WebDavStatus(node.text);
+    return WebDavStatus(node.text);
   }
 }

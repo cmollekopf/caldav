@@ -1,34 +1,38 @@
-import 'package:caldav/src/caldav/property/calendar-home-set.dart';
-import 'package:caldav/src/core/parser.dart';
-import 'package:caldav/src/webdav/element/_elements.dart';
-import 'package:caldav/src/webdav/property/_properties.dart';
+import '../caldav/property/calendar_home_set.dart';
+import '../webdav/element/_elements.dart';
+import '../webdav/property/_properties.dart';
+import 'parser.dart';
 
+/// Used for finding the parser for a XMl element
 class ParserFactory {
   static final ParserFactory _instance = ParserFactory._internal();
+  /// Creates a singleton [ParserFactory] instance
   factory ParserFactory() => _instance;
 
-  List<Parser> parsers = [];
+  /// List of registered parsers
+  List<Parser> parsers;
 
   ParserFactory._internal() {
-    this.parsers = [
+    parsers = [
       // WebDav Elements
-      new PropParser(),
-      new PropStatParser(),
-      new ResponseParser(),
-      new StatusParser(),
+      PropParser(),
+      PropStatParser(),
+      ResponseParser(),
+      StatusParser(),
 
       // WebDav Properties
-      new HrefParser(),
-      new CurrentUserPrincipalParser(),
-      new DisplayNameParser(),
+      HrefParser(),
+      CurrentUserPrincipalParser(),
+      DisplayNameParser(),
 
       // CalDav Properties
-      new CalendarHomeSetParser(),
+      CalendarHomeSetParser(),
     ];
   }
 
+  /// Returns a [Parser] for the XML object identified by [name] and [namespace]
   Parser getParser(String name, String namespace) {
-    return this.parsers.firstWhere((parser) =>
-        parser.getNodeName() == name && parser.getNodeNamespace() == namespace);
+    return parsers.firstWhere((parser) =>
+        parser.nodeName == name && parser.nodeNamespace == namespace);
   }
 }

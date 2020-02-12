@@ -1,12 +1,11 @@
 import 'package:caldav/src/webdav/element/_elements.dart';
 import 'package:test/test.dart';
-import '../../../_fixtures/caldav_data.dart' as data;
-
 import 'package:xml/xml.dart' as xml;
+import '../../../_fixtures/caldav_data.dart' as data;
 
 void main() {
   test('parse sample response', () async {
-    var processor = new ResponseParser();
+    var processor = ResponseParser();
     var node = xml.parse(data.nextCloudCurrentUser);
     var result = processor.parse(node);
 

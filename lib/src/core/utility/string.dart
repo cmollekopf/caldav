@@ -1,3 +1,4 @@
+/// Provides useful functionality for String manipulation
 class StringUtility {
   /// Removes API base path and leading and trailing slash of path string
   static String sanitizePath(String path, {String baseUrl = ''}) {
@@ -16,14 +17,12 @@ class StringUtility {
     return path;
   }
 
-  // /remote.php/caldav/principals/saitho/
-  //
-
+  /// Concatenates [apiBase] and [remotePath] into a path
   static String getFullPath(String apiBase, String remotePath) {
     remotePath = StringUtility.sanitizePath(remotePath);
-    return '/' +
-        apiBase +
-        (remotePath.isNotEmpty ? '/' + remotePath : '') +
-        '/';
+    if (remotePath.isNotEmpty) {
+      return '/$apiBase/$remotePath/';
+    }
+    return '/$apiBase/';
   }
 }
