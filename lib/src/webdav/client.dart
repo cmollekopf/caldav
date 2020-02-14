@@ -65,11 +65,10 @@ class WebDavClient {
   }
 
   /// Perform a PUT request to [remotePath] with optional [body] and [headers]
-  Future<Response> put(String remotePath,
+  Future<http.Response> put(String remotePath,
       {String body, Map<String, String> headers}) async {
     remotePath = StringUtility.sanitizePath(remotePath, baseUrl: path);
-    var response = await _send('PUT', remotePath, headers: headers, body: body);
-    return Response(response, remotePath, path);
+    return _send('PUT', remotePath, headers: headers, body: body);
   }
 
   /// Perform a PROPFIND request to [remotePath] with an optional [body]

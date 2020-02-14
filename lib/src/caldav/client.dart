@@ -79,14 +79,17 @@ SUMMARY:Test Event
 END:VEVENT
 END:VCALENDAR''';
 
-    var responseObj =
+    var response =
         await put('$calendarPath/$eventFileName.ics', body: calendarEntry);
-    var response = responseObj.rawResponse;
     if (response.statusCode == 301) {
       return createCalendarEvent(response.headers['location']);
     }
 
-    var xml = response.body;
-    developer.log(xml);
+    if (response.statusCode == 201) { // CREATED
+      developer.log('Calendar event created.');
+      return;
+    } else { // ERROR OCCURRED
+      throw response.body;
+    }
   }
 }
