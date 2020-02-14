@@ -48,7 +48,8 @@ class CalDavClient extends WebDavClient {
     // information -> remove it
     var responses = responseObj.getResponsesWithoutRequestHref();
 
-    var list = [];
+    // ignore: prefer_collection_literals
+    var list = List<CalDavCalendar>();
     for (var response in responses) {
       var displayName = findProperty(response, WebDavDisplayName());
       list.add(CalDavCalendar(response.getHref(), displayName.toString()));
