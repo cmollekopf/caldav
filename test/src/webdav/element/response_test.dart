@@ -4,7 +4,7 @@ import 'package:xml/xml.dart' as xml;
 import '../../../_fixtures/caldav_data.dart' as data;
 
 void main() {
-  test('parse sample response', () async {
+  test('parse response element', () async {
     var processor = ResponseParser();
     var node = xml.parse(data.nextCloudCurrentUser);
     var result = processor.parse(node);

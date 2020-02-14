@@ -19,10 +19,7 @@ class TestParser extends Parser<String> {
 
 void main() {
   test('get parser instance', () {
-
-    var parserFactory = ParserFactory.getMock([
-      TestParser()
-    ]);
+    var parserFactory = ParserFactory.getMock([TestParser()]);
     var parser = parserFactory.getParser('multistatus', 'DAV:');
 
     expect(parser is TestParser, true);

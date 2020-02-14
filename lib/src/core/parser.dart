@@ -82,6 +82,9 @@ abstract class Parser<T> {
 
   /// Look for processable nodes in [node] and process them
   List<T> parse(XmlNode node) {
+    if (node is XmlDocument) {
+      node = (node as XmlDocument).rootElement;
+    }
     updateNamespaces(node);
     // ignore: prefer_collection_literals
     var list = List<T>();
