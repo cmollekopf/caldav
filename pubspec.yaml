@@ -8,7 +8,7 @@ dependencies:
   xml: ^3.5.0
   http: ^0.12.0+4
   http_auth: ^0.2.9
-  quiver: ^2.1.2
+  quiver: 2.0.5
   meta: ^1.1.8
 
 dev_dependencies:
