@@ -15,7 +15,7 @@ class WebDavProp extends WebDavElement {
 /// Parses <prop> XML nodes into [WebDavProp] object
 class PropParser extends WebDavParser<WebDavProp> {
   /// Creates a new PropParser. Unparsable children will be ignored.
-  PropParser(): super(skipUnparsableChildren: true);
+  PropParser() : super(skipUnparsableChildren: true);
 
   @override
   WebDavProp getGenericInstance() => WebDavProp();

@@ -13,7 +13,7 @@ abstract class WebDavParser<T> extends Parser<T> {
   /// Constructor for a WebDavParser.
   /// if skipUnparsableChildren is true,
   /// no exception is thrown when a child element has no parser
-  WebDavParser({this.skipUnparsableChildren}): super();
+  WebDavParser({this.skipUnparsableChildren}) : super();
 
   /// parses child nodes by calling the respective parsers
   dynamic parseChildren(XmlNodeList<XmlNode> children) {
