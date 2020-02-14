@@ -6,11 +6,15 @@ import 'parser.dart';
 /// Used for finding the parser for a XMl element
 class ParserFactory {
   static final ParserFactory _instance = ParserFactory._internal();
-  /// Creates a singleton [ParserFactory] instance
-  factory ParserFactory() => _instance;
 
-  /// List of registered parsers
-  List<Parser> parsers;
+  /// Creates a singleton [ParserFactory] instance
+  factory ParserFactory.create() => _instance;
+
+  /// Used to get a non-Singleton ParserFactory with a custom list
+  factory ParserFactory.getMock(List<Parser> parser) =>
+      ParserFactory._withList(parser);
+
+  static List<Parser> parsers;
 
   ParserFactory._internal() {
     parsers = [
@@ -28,6 +32,10 @@ class ParserFactory {
       // CalDav Properties
       CalendarHomeSetParser(),
     ];
+  }
+
+  ParserFactory._withList(List<Parser> parserList) {
+    parsers = parserList;
   }
 
   /// Returns a [Parser] for the XML object identified by [name] and [namespace]

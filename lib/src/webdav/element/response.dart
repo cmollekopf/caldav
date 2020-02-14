@@ -32,7 +32,7 @@ class ResponseParser extends WebDavParser<WebDavResponse> {
     var response = node as XmlElement;
     var responseObj = WebDavResponse();
 
-    responseObj.href = ParserFactory()
+    responseObj.href = ParserFactory.create()
         .getParser('href', webDavNamespace)
         .parse(response)
         .first;

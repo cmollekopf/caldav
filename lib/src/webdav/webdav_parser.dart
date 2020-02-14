@@ -40,7 +40,7 @@ abstract class WebDavParser<T> extends Parser<T> {
       var name = childAsElement.name.local;
       var namespaceUri = childAsElement.name.namespaceUri;
       try {
-        var subParser = ParserFactory().getParser(name, namespaceUri);
+        var subParser = ParserFactory.create().getParser(name, namespaceUri);
         var parsedValue = subParser.parseSingle(child);
         if (parsedValue is String) {
           return parsedValue;
