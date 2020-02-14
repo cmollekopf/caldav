@@ -4,14 +4,19 @@ import '../webdav_element.dart';
 import '../webdav_parser.dart';
 
 /// <prop> element described in RFC 4918
-/// "This element MUST NOT contain text or mixed content."
 class WebDavProp extends WebDavElement {
+  /// Constructor
   WebDavProp() : super('prop');
 
+  /// This element MUST NOT contain text or mixed content."
   List<core.XmlElement> content;
 }
 
+/// Parses <prop> XML nodes into [WebDavProp] object
 class PropParser extends WebDavParser<WebDavProp> {
+  /// Creates a new PropParser. Unparsable children will be ignored.
+  PropParser(): super(skipUnparsableChildren: true);
+
   @override
   WebDavProp getGenericInstance() => WebDavProp();
 
