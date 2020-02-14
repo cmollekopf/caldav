@@ -149,3 +149,10 @@ String nextCloudUserCalendars = '''<?xml version="1.0"?>
         </d:propstat>
     </d:response>
 </d:multistatus>''';
+
+String nextCloudEventCreateError = '''<?xml version="1.0" encoding="utf-8"?>
+<d:error xmlns:d="DAV:" xmlns:s="http://sabredav.org/ns">
+    <s:exception>Sabre\\DAV\\Exception\\NotFound</s:exception>
+    <s:message>Node with name 'personal' could not be found</s:message>
+</d:error>
+''';

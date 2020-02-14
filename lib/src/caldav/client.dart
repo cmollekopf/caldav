@@ -1,4 +1,3 @@
-import 'dart:developer' as developer;
 import 'package:http/http.dart' as http;
 import '../webdav/client.dart';
 import '../webdav/property/_properties.dart';
@@ -53,43 +52,10 @@ class CalDavClient extends WebDavClient {
     for (var response in responses) {
       var displayName =
           findProperty<WebDavDisplayName>(response, WebDavDisplayName());
-      list.add(CalDavCalendar(response.getHref(), displayName.displayName));
+      list.add(
+          CalDavCalendar(response.getHref(), displayName.displayName, this));
     }
 
     return list;
-  }
-
-  /// Create a new event in a calendar identified by [calendarPath]
-  void createCalendarEvent(String calendarPath) async {
-    if (calendarPath.startsWith('/$path')) {
-      calendarPath = calendarPath.substring(path.length + 1);
-    }
-
-    var eventFileName =
-        'event-${DateTime.now().millisecondsSinceEpoch.toString()}';
-    var calendarEntry = '''BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Example Corp.//CalDAV Client//EN
-BEGIN:VEVENT
-UID:20010712T182145Z-123401@example.com
-DTSTAMP:20200212T182145Z
-DTSTART:20200214T170000Z
-DTEND:20200215T040000Z
-SUMMARY:Test Event
-END:VEVENT
-END:VCALENDAR''';
-
-    var response =
-        await put('$calendarPath/$eventFileName.ics', body: calendarEntry);
-    if (response.statusCode == 301) {
-      return createCalendarEvent(response.headers['location']);
-    }
-
-    if (response.statusCode == 201) { // CREATED
-      developer.log('Calendar event created.');
-      return;
-    } else { // ERROR OCCURRED
-      throw response.body;
-    }
   }
 }
